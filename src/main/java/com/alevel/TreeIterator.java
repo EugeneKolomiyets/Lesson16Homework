@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class TreeIterator {
 
-    public <K, V> V searchInWidth(MyTree<K, V> tree, K key) {
+    public <K extends Comparable, V> V searchInWidth(MyTree<K, V> tree, K key) {
         Queue<MyTree<K, V>> queue = new LinkedList<>();
         queue.offer(tree);
         while (!queue.isEmpty()) {
@@ -24,7 +24,7 @@ public class TreeIterator {
         return null;
     }
 
-    public <K, V> V searchInDeep(MyTree<K, V> tree, K key) {
+    public <K extends Comparable, V> V searchInDeep(MyTree<K, V> tree, K key) {
         if (tree.getKey().equals(key)) {
             return tree.getValue();
         }
