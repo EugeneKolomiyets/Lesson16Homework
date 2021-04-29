@@ -1,6 +1,6 @@
 package com.alevel;
 
-public class MyTree <K, V> {
+public class MyTree <K extends Comparable, V> {
 
     private K key;
     private V value;
@@ -36,8 +36,6 @@ public class MyTree <K, V> {
     public void delete(K key){
         if (key==null)
             return;
-        if (!(key instanceof Comparable))
-            return;
         MyTree<K,V> node = getNodeByKey(this,key);
         MyTree<K,V> parent = getParentNodeByKey(this,null,key);
         deleteRecursia(node,parent,key);
@@ -50,25 +48,25 @@ public class MyTree <K, V> {
             //Если дерево T пусто, остановиться;
             return;
 
-        int resultOfCompare=((Comparable) key).compareTo(node.key);
+        int resultOfCompare=key.compareTo(node.key);
         if (resultOfCompare == 0) {
             //Если K=X, то необходимо рассмотреть три случая
             if (node.left == null && node.right == null) {
                 //Если обоих детей нет, то удаляем текущий узел и обнуляем ссылку на него у родительского узла;
                 if (parent != null) {
-                    if (parent.left == node)
+                    if (parent.left.equals(node))
                         parent.left = null;
-                    else if (parent.right == node)
+                    else if (parent.right.equals(node))
                         parent.right = null;
                 }
                 node = null;
             } else if (node.left != null && node.right == null) {
                 //Если одного из детей нет, то значения полей ребёнка m ставим вместо соответствующих значений корневого узла, затирая его старые значения, и освобождаем память, занимаемую узлом m;
                 if (parent != null) {
-                    if (parent.left == node) {
+                    if (parent.left.equals(node)) {
                         parent.left.key = node.left.key;
                         parent.left.value = node.left.value;
-                    } else if (parent.right == node) {
+                    } else if (parent.right.equals(node)) {
                         parent.right.key = node.left.key;
                         parent.right.value = node.left.value;
                     }
@@ -77,10 +75,10 @@ public class MyTree <K, V> {
                 node = null;
             } else if (node.left == null && node.right != null) {
                 if (parent != null) {
-                    if (parent.left == node) {
+                    if (parent.left.equals(node)) {
                         parent.left.key = node.right.key;
                         parent.left.value = node.right.value;
-                    } else if (parent.right == node) {
+                    } else if (parent.right.equals(node)) {
                         parent.right.key = node.right.key;
                         parent.right.value = node.right.value;
                     }
@@ -143,13 +141,11 @@ public class MyTree <K, V> {
 
         if (key==null)
             return null;
-        if (!(key instanceof Comparable))
-            return null;
         return getValueByKey(this, key);
 
     }
 
-    private <K, V> V getValueByKey(MyTree<K, V> tree, K key) {
+    private <K extends Comparable, V> V getValueByKey(MyTree<K, V> tree, K key) {
         if (tree.getKey().equals(key)) {
             return tree.getValue();
         }
@@ -164,7 +160,7 @@ public class MyTree <K, V> {
         return value;
     }
 
-    private  <K, V> MyTree getNodeByKey(MyTree<K, V> tree, K key) {
+    private  <K extends Comparable, V> MyTree getNodeByKey(MyTree<K, V> tree, K key) {
         if (tree.getKey().equals(key)) {
             return tree;
         }
@@ -178,7 +174,7 @@ public class MyTree <K, V> {
         }
         return node;
     }
-    private  <K, V> MyTree getParentNodeByKey(MyTree<K, V> tree, MyTree<K, V> parent, K key) {
+    private  <K extends Comparable, V> MyTree getParentNodeByKey(MyTree<K, V> tree, MyTree<K, V> parent, K key) {
         if (tree.getKey().equals(key)) {
             return parent;
         }
@@ -197,8 +193,6 @@ public class MyTree <K, V> {
 
         if (key==null)
             return;
-        if (!(key instanceof Comparable))
-            return;
         if (this.key==null){
             this.value=value;
             this.key=key;
@@ -215,7 +209,7 @@ public class MyTree <K, V> {
             return;
         }
 
-        int resultOfCompare=((Comparable) key).compareTo(node.key);
+        int resultOfCompare=key.compareTo(node.key);
         if (resultOfCompare==0)
             node.value=value;
         else if(resultOfCompare<0) {
