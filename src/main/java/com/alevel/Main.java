@@ -9,13 +9,15 @@ public class Main {
         tree.add("b","вв");
         tree.add("b","вв1");
         tree.add("a","вв");
-        tree.add("a1","вв1");
+        tree.add("a1","вв2");
         tree.add("a","в1");
         tree.add("e","в12");
         tree.add("d","в13");
         tree.add("c","в14");
         tree.add("c1","в15");
+        System.out.println(tree.get("b"));
         tree.delete("b");
+        System.out.println(tree.get("b"));
         //System.out.println(tree);
         //System.out.println(MyTree.getNodeByKey(tree,"а").getValue());
         System.out.println(tree.get("a2"));

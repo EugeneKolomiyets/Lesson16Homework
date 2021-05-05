@@ -145,11 +145,22 @@ public class MyTree <K extends Comparable, V> {
 
     }
 
-    private <K extends Comparable, V> V getValueByKey(MyTree<K, V> tree, K key) {
-        if (tree.getKey().equals(key)) {
+    private <K extends Comparable, V> V getValueByKey(MyTree<K, V> node, K key) {
+
+        if (node==null)
+            return null;
+        int resultOfCompare=key.compareTo(node.key);
+        V value = null;
+        if(resultOfCompare==0)
+            value = node.getValue();
+        else if (resultOfCompare<0)
+            value = getValueByKey(node.getLeft(), key);
+        else if (resultOfCompare>0)
+            value = getValueByKey(node.getRight(),key);
+        return value;
+        /*if (tree.getKey().equals(key)) {
             return tree.getValue();
         }
-
         V value = null;
         if (tree.getLeft() != null) {
             value = getValueByKey(tree.getLeft(), key);
@@ -157,7 +168,7 @@ public class MyTree <K extends Comparable, V> {
         if (value == null && tree.getRight() != null) {
             value = getValueByKey(tree.getRight(), key);
         }
-        return value;
+        return value;*/
     }
 
     private  <K extends Comparable, V> MyTree getNodeByKey(MyTree<K, V> tree, K key) {
